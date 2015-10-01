@@ -12,6 +12,7 @@ public class Course {
     private Type type;
     private String name;
     private int period;
+    private boolean honors;
     //private Student theStudent;
     private ArrayList<Student> students = new ArrayList<Student>();
     private Teacher theTeacher;
@@ -22,12 +23,14 @@ public class Course {
          name = "none";
          period= 0;
          type = Type.Elective;
+         honors = false;
      }
-     Course(String _name, Type _type, int _period)
+     Course(String _name, Type _type, int _period, boolean _honors)
      {
          name = _name;
          type= _type;
          period = _period;
+         honors=_honors;
      }
 //     public void addStudent(Student _student)
 //     {
@@ -45,9 +48,9 @@ public class Course {
 //         _teacher.addCourse(this);
 //         }
 //     }
-     public static Course addCourse(String _name, Type _gender, int _weight)
+     public static Course addCourse(String _name, Type _gender, int _weight, boolean _honors)
      {
-         Course temp = new Course(_name,_gender,_weight);
+         Course temp = new Course(_name,_gender,_weight,_honors);
         // people[currentPeopleIndex++] = temp;
          people.add(temp);
          return (temp);
@@ -55,13 +58,13 @@ public class Course {
      }
      
      ////////////////////////////
-     public boolean addStudent(Student _student)
+     public boolean addStudent(Student _student, double _grade)
      {
          if(!setStudentOK(_student))
              return(false);
          if(!_student.setCourseOK(this))
              return false;
-         _student.setCourseDoIt(this);
+         _student.setCourseDoIt(this,_grade);
          setStudentDoIt(_student);
          return (true);
      }
@@ -154,6 +157,10 @@ public class Course {
      public int getPeriod()
      {
          return(period);
+     }
+     public boolean getHonors()
+     {
+         return(honors);
      }
      public Teacher getTeacher()
      {

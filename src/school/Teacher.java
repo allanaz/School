@@ -5,6 +5,7 @@ public class Teacher extends Person{
     private double meanIndex;
     private Course theCourse;
     private Course courses[]= new Course[Course.numPeriods];
+   
     //private Student theStudent;
     
     
@@ -74,15 +75,61 @@ public class Teacher extends Person{
          }
          
      }
+     public void printStudentsNamesInGrade(int _gradeLevel)
+     {
+         System.out.println(getName() + "'s students in " + _gradeLevel+ "th grade:" );
+         for(Course temp : courses)
+         {
+             if(temp!=null)
+             {
+                 for(int i = 0;i < temp.getNumStudentsInCourse(); i++)
+                 {
+                     if(temp.getStudent(i).getGradeLevel()==_gradeLevel)
+                     System.out.println(temp.getStudent(i).getName());
+                 }
+             }
+         }
+         
+     }
      public static void printNames()
      {
-         System.out.println("=PrintNamesStudents=");
+         System.out.println("=PrintNamesTeachers=");
           for (Person temp : people)
          {
              if( temp instanceof Teacher)
              System.out.println(temp.getName());
          }
           System.out.println("=============");
+     }
+     public static Teacher getMostElectives ()
+     {
+         Teacher mostElectives = null;
+         int most=0;
+         for(Person temp :people)
+         {
+             if( temp instanceof Teacher)
+             {
+                 
+                     int num=0;
+                     for(Course course :((Teacher)temp).courses)
+                     {
+                         
+                        if( course!=null&&course.getType() == Course.Type.Elective)
+                        {
+                            num++;
+                        }
+                         
+                     }
+                     if(num>most)
+                     {
+                         most=num;
+                     mostElectives = (Teacher)temp;
+                     }
+                 
+             }
+         }
+         return (mostElectives);
+         
      }
      
      public String toString()
